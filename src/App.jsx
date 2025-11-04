@@ -4,6 +4,7 @@ import Index from './components'
 import Header from './components/header'
 import { Routes, Route } from 'react-router-dom'
 import ProductList from './components/ProductList'
+import Footer from './components/footer'
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
       <Route path="/shop" element={<ProductList />} />
 
     </Routes>
+
+    <Footer />
     </>
   )
 }
