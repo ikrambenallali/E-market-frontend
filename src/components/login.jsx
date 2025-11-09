@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
+  const [error, setError] = useState('') // pour afficher les erreurs
 
   const handleChange = (e) => {
     setFormData({
@@ -13,33 +15,44 @@ function Login() {
     })
   }
 
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData)
-    alert('Connexion réussie !')
+  const handleSubmit = async (e) => {
+    e.preventDefault() // empêcher le rechargement de la page
+    setError('') // reset des erreurs
+
+    try {
+      const response = await axios.post('http://localhost:3000/auth/login', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      console.log('Réponse du backend:', response.data)
+      alert('Connexion réussie !')
+
+      // Exemple : stocker le token dans localStorage
+      localStorage.setItem('token', response.data.data.jwt)
+    } catch (err) {
+      console.error(err)
+      if (err.response) {
+        setError(err.response.data.message)
+      } else {
+        setError('Erreur serveur')
+      }
+    }
   }
 
   return (
     <div className='min-h-screen flex items-center justify-center p-4' 
-       style={{ backgroundImage: "url('/src/assets/image2.png')", width: '100%', height: '100vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+         style={{ backgroundImage: "url('/src/assets/image2.png')", width: '100%', height: '100vh', backgroundSize: 'cover', backgroundPosition: 'center'}}>
       
-      {/* Carte glassmorphism */}
       <div className='h-140 w-1/3 rounded-3xl p-12 shadow-2xl ml-44 mt-20 scale-80' 
-           style={{
-             background: 'rgba(255, 255, 255, 0.15)',
-             backdropFilter: 'blur(10px)',
-             border: '1px solid rgba(255, 255, 255, 0.2)'
-           }}>
+           style={{ background: 'rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)'}}>
         
-        {/* Titre */}
-        <h1 className='text-5xl font-bold text-center mb-12' 
-            style={{ color: '#561E29' }}>
-          Sign In
-        </h1>
+        <h1 className='text-5xl font-bold text-center mb-12' style={{ color: '#561E29' }}>Sign In</h1>
 
-        {/* Champs de formulaire */}
-        <div className='space-y-8'>
-          
-          {/* Email */}
+        {error && <p className='text-red-500 text-center mb-4'>{error}</p>}
+
+        <form className='space-y-8' onSubmit={handleSubmit}>
           <div>
             <input
               type='email'
@@ -52,7 +65,6 @@ function Login() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <input
               type='password'
@@ -65,25 +77,22 @@ function Login() {
             />
           </div>
 
-          {/* Mot de passe oublié */}
           <div className='text-right'>
             <a href='#' className='text-gray-700 text-sm hover:text-[#561E29] transition-colors'>
               Mot de passe oublié ?
             </a>
           </div>
 
-          {/* Bouton Submit */}
           <div className='flex justify-center pt-6'>
             <button
-              onClick={handleSubmit}
+              type='submit'
               className='bg-[#561E29] text-white font-bold py-4 px-12 rounded-full text-xl hover:bg-[#6B2534] transition-all transform hover:scale-105 shadow-lg'
             >
-              sign In
+              Sign In
             </button>
           </div>
-        </div>
+        </form>
 
-        {/* Lien vers Sign Up */}
         <div className='text-center mt-8'>
           <p className='text-gray-700'>
             Vous n'avez pas de compte ?{' '}
