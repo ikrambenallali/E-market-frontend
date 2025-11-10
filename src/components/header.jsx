@@ -9,6 +9,8 @@ export default function Header() {
           <li><a href="/" className="hover:underline">Home</a></li>
           <li><a href="/shop" className="hover:underline">Shop</a></li>
           <li><a href="" className="hover:underline">Cart</a></li>
+         
+          <li><a href="/logout" className="hover:underline">logout</a></li>
         </ul>
       </nav>
     </header>
