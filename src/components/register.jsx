@@ -27,7 +27,8 @@ const { register } = useAuth();
         formData.password
       );
 
-      alert("Inscription réussie !");
+      // alert("Inscription réussie !");
+      message.success("Inscription réussie !");
     } catch (error) {
       alert(error.response?.data?.message || "Erreur lors de l'inscription");
     }
@@ -57,11 +58,11 @@ const { register } = useAuth();
           
           <input
             type='text'
-            name='fullname'   // ✅ correspond au backend
+            name='fullname'  
             placeholder='Full Name'
             value={formData.fullname}
             onChange={handleChange}
-            className='w-full bg-transparent border-b-2 border-gray-600 py-3 px-2 text-gray-700 placeholder-gray-600 italic focus:outline-none focus:border-[#561E29]'
+            className='w-full bg-transparent border-b-2 border-black py-3 px-2 text-gray-700 placeholder-black italic focus:outline-none focus:border-[#561E29]'
           />
 
           <input
@@ -70,7 +71,7 @@ const { register } = useAuth();
             placeholder='Email'
             value={formData.email}
             onChange={handleChange}
-            className='w-full bg-transparent border-b-2 border-gray-600 py-3 px-2 text-gray-700 placeholder-gray-600 italic focus:outline-none focus:border-[#561E29]'
+            className='w-full bg-transparent border-b-2 border-black py-3 px-2 text-gray-700 placeholder-black italic focus:outline-none focus:border-[#561E29]'
           />
 
           <input
@@ -79,7 +80,7 @@ const { register } = useAuth();
             placeholder='Password'
             value={formData.password}
             onChange={handleChange}
-            className='w-full bg-transparent border-b-2 border-gray-600 py-3 px-2 text-gray-700 placeholder-gray-600 italic focus:outline-none focus:border-[#561E29]'
+            className='w-full bg-transparent border-b-2 border-black py-3 px-2 text-gray-700 placeholder-black italic focus:outline-none focus:border-[#561E29]'
           />
 
           <div className='flex justify-center pt-6'>
@@ -94,7 +95,7 @@ const { register } = useAuth();
 
         <div className='text-center mt-8'>
           <p className='text-gray-700'>
-            Vous avez déjà un compte ?{' '}
+            you have an account ?{' '}
             <a href='login' className='text-[#561E29] font-semibold hover:underline'>
               Sign In
             </a>

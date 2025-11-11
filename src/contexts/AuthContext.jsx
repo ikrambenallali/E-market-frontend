@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import api from "../api/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 
 // creer context 
@@ -9,12 +10,16 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
 
   //  Charger profil 
   const fetchProfile = async () => {
     try {
       const res = await api.get("/profiles/me");
       setUser(res.data.data);
+      console.log("Profil chargé :", res.data.data);
+      
             
     } catch (err) {
       console.error("Erreur chargement profil :", err);
@@ -36,20 +41,22 @@ export function AuthProvider({ children }) {
     setToken(jwt);
 
     await fetchProfile();
-
+    navigate("/profile"); 
     return response.data;
   };
 
   //  Login
   const login = async (email, password) => {
     const response = await api.post("/auth/login", { email, password });
-
     const jwt = response.data.data.jwt;
 
     localStorage.setItem("token", jwt);
     setToken(jwt);
+    console.log("Token après login :", jwt);
+    console.log("fetchProfile après login :", fetchProfile());
 
     await fetchProfile();
+    navigate("/profile");
 
     return response.data;
   };

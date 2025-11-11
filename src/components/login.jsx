@@ -1,9 +1,8 @@
 import  {  useState } from 'react'
-import axios from 'axios'
 import { useAuth } from '../contexts/authContext'
 
 function Login() {
-   const { login } = useAuth()
+  const { login } = useAuth()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -20,12 +19,14 @@ function Login() {
   }
 
   const handleSubmit = async (e) => {
+    // empêche le rechargement de la pag
     e.preventDefault()
     setError('')
 
     try {
-      await login(formData.email, formData.password)  // ✅ appel du context
-      alert("Connexion réussie !")
+      await login(formData.email, formData.password)  
+      // alert("Connexion réussie !")
+      message.success("Connexion réussie !")
 
     } catch (err) {
       console.error(err)
@@ -53,7 +54,7 @@ function Login() {
               placeholder='email'
               value={formData.email}
               onChange={handleChange}
-              className='w-full bg-transparent border-b-2 border-gray-600 py-3 px-2 text-gray-700 placeholder-gray-600 italic focus:outline-none focus:border-[#561E29] transition-colors'
+              className='w-full bg-transparent border-b-2 border-black py-3 px-2 text-black placeholder-black italic focus:outline-none focus:border-[#561E29] transition-colors'
               style={{ fontSize: '1.1rem' }}
             />
           </div>
@@ -65,14 +66,14 @@ function Login() {
               placeholder='password'
               value={formData.password}
               onChange={handleChange}
-              className='w-full bg-transparent border-b-2 border-gray-600 py-3 px-2 text-gray-700 placeholder-gray-600 italic focus:outline-none focus:border-[#561E29] transition-colors'
+              className='w-full bg-transparent border-b-2 border-black py-3 px-2 text-black placeholder-black italic focus:outline-none focus:border-[#561E29] transition-colors'
               style={{ fontSize: '1.1rem' }}
             />
           </div>
 
           <div className='text-right'>
-            <a href='#' className='text-gray-700 text-sm hover:text-[#561E29] transition-colors'>
-              Mot de passe oublié ?
+            <a href='#' className='text-black text-sm hover:text-[#561E29] transition-colors'>
+              password forgotten?
             </a>
           </div>
 
@@ -87,8 +88,8 @@ function Login() {
         </form>
 
         <div className='text-center mt-8'>
-          <p className='text-gray-700'>
-            Vous n'avez pas de compte ?{' '}
+          <p className='text-black'>
+            you dont have account  ?{' '}
             <a href='/signup' className='text-[#561E29] font-semibold hover:underline'>
               Sign Up
             </a>

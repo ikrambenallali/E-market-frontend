@@ -8,7 +8,6 @@ export default function Profile() {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  // ✅ Si user n'est pas encore chargé
   if (!user)
     return (
       <p className="text-center mt-20 text-xl text-[#D58E8E]">
@@ -29,10 +28,10 @@ export default function Profile() {
         password: user.password || undefined,
       });
 
-      setSuccessMsg("✅ Profil mis à jour avec succès !");
+      setSuccessMsg(" profil updated successfully!");
     } catch (error) {
       console.error(error);
-      setErrorMsg("❌ Erreur lors de la mise à jour du profil");
+      setErrorMsg(" Error updating profile");
     } finally {
       setSaving(false);
     }
@@ -58,7 +57,7 @@ export default function Profile() {
           
           <div className="mb-6">
             <label className="block text-[#561E29] font-semibold mb-2">
-              Nom complet
+              fullname
             </label>
             <input
               type="text"
@@ -86,7 +85,7 @@ export default function Profile() {
 
           <div className="mb-6">
             <label className="block text-[#561E29] font-semibold mb-2">
-              Nouveau mot de passe (optionnel)
+              Password
             </label>
             <input
               type="password"
@@ -103,7 +102,7 @@ export default function Profile() {
             disabled={saving}
             className="w-full bg-[#D58E8E] text-white py-3 rounded-full font-semibold hover:bg-[#C97C7C] transition"
           >
-            {saving ? "Enregistrement..." : "Enregistrer les modifications"}
+            {saving ? "Enregistrement..." : "save changes"}
           </button>
 
         </form>
