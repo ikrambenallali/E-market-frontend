@@ -92,7 +92,7 @@ function SignUp() {
         <div className='text-center mt-8'>
           <p className='text-gray-700'>
             Vous avez déjà un compte ?{' '}
-            <a href='#' className='text-[#561E29] font-semibold hover:underline'>
+            <a href='login' className='text-[#561E29] font-semibold hover:underline'>
               Sign In
             </a>
           </p>

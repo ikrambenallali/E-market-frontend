@@ -96,7 +96,7 @@ function Login() {
         <div className='text-center mt-8'>
           <p className='text-gray-700'>
             Vous n'avez pas de compte ?{' '}
-            <a href='#' className='text-[#561E29] font-semibold hover:underline'>
+            <a href='/signup' className='text-[#561E29] font-semibold hover:underline'>
               Sign Up
             </a>
           </p>
