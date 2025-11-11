@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import  {  useState } from 'react'
 import axios from 'axios'
+import { useAuth } from '../contexts/authContext'
 
 function Login() {
+   const { login } = useAuth()
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
-  const [error, setError] = useState('') // pour afficher les erreurs
+
+  const [error, setError] = useState('')
 
   const handleChange = (e) => {
     setFormData({
@@ -16,30 +20,19 @@ function Login() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault() // empêcher le rechargement de la page
-    setError('') // reset des erreurs
+    e.preventDefault()
+    setError('')
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', formData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      await login(formData.email, formData.password)  // ✅ appel du context
+      alert("Connexion réussie !")
 
-      console.log('Réponse du backend:', response.data)
-      alert('Connexion réussie !')
-
-      // Exemple : stocker le token dans localStorage
-      localStorage.setItem('token', response.data.data.jwt)
     } catch (err) {
       console.error(err)
-      if (err.response) {
-        setError(err.response.data.message)
-      } else {
-        setError('Erreur serveur')
-      }
+      setError(err.response?.data?.message || "Erreur serveur")
     }
   }
+
 
   return (
     <div className='min-h-screen flex items-center justify-center p-4' 

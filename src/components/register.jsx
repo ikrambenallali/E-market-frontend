@@ -1,34 +1,37 @@
-import React, { useState } from 'react'
-import api from '../api/axiosClient.js' 
+import  { useState } from 'react'
+import { useAuth } from '../contexts/authContext.jsx';
 
 function SignUp() {
+const { register } = useAuth();
+
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
     password: ''
-  })
+  });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await api.post('/auth/signup', formData)
+      await register(
+        formData.fullname,
+        formData.email,
+        formData.password
+      );
 
-      console.log(response.data)
-      alert('Inscription réussie !')
+      alert("Inscription réussie !");
     } catch (error) {
-      console.error(error.response?.data)
-
-      alert(error.response?.data?.message || "Erreur lors de l'inscription")
+      alert(error.response?.data?.message || "Erreur lors de l'inscription");
     }
-  }
+  };
 
   return (
     <div className='min-h-screen flex items-center justify-center p-4'

@@ -11,6 +11,7 @@ export default function Header() {
           <li><a href="" className="hover:underline">Cart</a></li>
          
           <li><a href="/login" className="hover:underline">login</a></li>
+          <li><a href="/logout" className="hover:underline">logout</a></li>
         </ul>
       </nav>
     </header>

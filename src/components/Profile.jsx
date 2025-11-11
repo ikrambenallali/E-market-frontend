@@ -1,34 +1,20 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import  {  useState } from "react";
+import { useAuth } from "../contexts/authContext";
 
 export default function Profile() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { user, setUser, updateProfile } = useAuth();
+
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const token = localStorage.getItem("token");
-  const baseURL = import.meta.env.VITE_API_URL;
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(`http://127.1.0.1:3000/profiles/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setUser(response.data.data.user);
-      } catch (error) {
-        console.error(error);
-        setErrorMsg("Impossible de charger votre profil");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, []);
+  // ✅ Si user n'est pas encore chargé
+  if (!user)
+    return (
+      <p className="text-center mt-20 text-xl text-[#D58E8E]">
+        Chargement du profil...
+      </p>
+    );
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -37,35 +23,20 @@ export default function Profile() {
     setErrorMsg("");
 
     try {
-      await axios.put(
-        `${baseURL}/profiles/me`,
-        {
-          fullname: user.fullname,
-          email: user.email,
-          password: user.password || undefined,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await updateProfile({
+        fullname: user.fullname,
+        email: user.email,
+        password: user.password || undefined,
+      });
 
-      setSuccessMsg(" Profil mis à jour avec succès !");
+      setSuccessMsg("✅ Profil mis à jour avec succès !");
     } catch (error) {
       console.error(error);
-      setErrorMsg("Erreur lors de la mise à jour du profil");
+      setErrorMsg("❌ Erreur lors de la mise à jour du profil");
     } finally {
       setSaving(false);
     }
   };
-
-  if (loading)
-    return (
-      <p className="text-center mt-20 text-xl text-[#D58E8E]">
-        Chargement...
-      </p>
-    );
-
-  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-[#FBF4FA] flex flex-col items-center p-10">
